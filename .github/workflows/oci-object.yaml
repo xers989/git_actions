@@ -9,8 +9,13 @@ jobs:
 
     steps:
     - name: Configure OCI Token
-      uses: oci-actions/configure-oci-credentials@v1
+      uses: bytesbay/oci-cli-action@v1.0.1
       with:
+        user: ${{ secrets.OCI_USER }}
+        fingerprint: "${{ secrets.OCI_FINGERPRINT }}"
+        tenancy: ${{ secrets.OCI_TENANCY }}
+        region: ${{ secrets.OCI_REGION }}
+        api_key: ${{ secrets.OCI_API_KEY }}
         oci-auth-token: ${{ secrets.OCI_TOKEN }}
     - name: List Object storage
-      run: oci bn
+      run: oci os object list --bucket-name kyudong
