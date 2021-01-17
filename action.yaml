@@ -1,0 +1,30 @@
+name: 'oci-cli'
+description: 'Installing oci-cli (Oracle Cloud Infrastructure CLI)'
+author: 'Kydong'
+inputs:
+  user:
+    description: 'oci user'
+    required: true
+  fingerprint:
+    description: 'oci fingerprint (not always required)'
+  tenancy:
+    description: 'oci tenancy'
+    required: true
+  region:
+    description: 'oci region'
+    required: true
+  api_key:
+    description: 'oci API key'
+    required: true
+  verbose:
+    description: 'Debuggin mode'
+    default: false
+
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+  pre-if: 'runner.os == linux'
+
+branding:
+  icon: 'terminal'
+  color: 'gray-dark'
