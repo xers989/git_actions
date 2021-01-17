@@ -1,0 +1,16 @@
+name: secrets
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Configure OCI Token
+      uses: oci-actions/configure-oci-credentials@v1
+      with:
+        oci-auth-token: ${{ secrets.OCI_TOKEN }}
+    - name: List Object storage
+      run: oci bn
