@@ -8,7 +8,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Configure OCI Token
+    - uses: actions/checkout@v1
+      
+    - name: Install oci-cli
       uses: bytesbay/oci-cli-action@v1.0.1
       with:
         user: ${{ secrets.OCI_USER }}
@@ -16,6 +18,7 @@ jobs:
         tenancy: ${{ secrets.OCI_TENANCY }}
         region: ${{ secrets.OCI_REGION }}
         api_key: ${{ secrets.OCI_API_KEY }}
-        oci-auth-token: ${{ secrets.OCI_TOKEN }}
+    - run: cat ~/.oci/config  
+    - run: oci -v
     - name: List Object storage
       run: oci os object list --bucket-name kyudong
