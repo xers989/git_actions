@@ -35,6 +35,7 @@ jobs:
         exec -l $SHELL
         oci setup repair-file-permissions --file /home/runner/.oci/config
         oci setup repair-file-permissions --file /home/runner/.oci/key.pem
+        oci -v
     
     - run: cat ~/.oci/config  
     - run: oci -v
