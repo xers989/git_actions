@@ -35,8 +35,8 @@ jobs:
   
     - name: 'Fix Config File Permissions'
       run: |
-        oci setup repair-file-permissions --file /home/runner/.oci/config
-        oci setup repair-file-permissions --file /home/runner/.oci/key.pem
+        home/runner/bin/oci setup repair-file-permissions --file /home/runner/.oci/config
+        home/runner/bin/oci setup repair-file-permissions --file /home/runner/.oci/key.pem
     
     - run: cat ~/.oci/config  
     - run: oci -v
