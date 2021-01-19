@@ -14,16 +14,31 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.6
-      
-    - name: Install oci-cli
-      uses: bytesbay/oci-cli-action@v1.0.1
-      with:
-        user: "${{ secrets.OCI_USER }}"
-        fingerprint: "${{ secrets.OCI_FINGERPRINT }}"
-        tenancy: "${{ secrets.OCI_TENANCY }}"
-        region: "${{ secrets.OCI_REGION }}"
-        api_key: "${{ secrets.OCI_API_KEY }}"
-        verbose: true
+    
+    - name: 'Install OCI CLI'
+      run: |
+        curl -L -O https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh
+        chmod +x install.sh
+        ./install.sh --accept-all-defaults
+        echo "::add-path::/home/runner/bin"
+        exec -l $SHELL
+        
+    - name: 'Write Config & Key Files'
+      run: |
+        mkdir ~/.oci
+        echo "[DEFAULT]" >> ~/.oci/config
+        echo "user=${{secrets.OCI_USER}}" >> ~/.oci/config
+        echo "fingerprint=${{secrets.OCI_FINGERPRINT}}" >> ~/.oci/config
+        echo "region=${{secrets.OCI_REGION}}" >> ~/.oci/config
+        echo "tenancy=${{secrets.OCI_TENANCY}}" >> ~/.oci/config
+        echo "key_file=~/.oci/key.pem" >> ~/.oci/config
+        echo "${{secrets.OCI_API_KEY}}" >> ~/.oci/key.pem
+  
+    - name: 'Fix Config File Permissions'
+      run: |
+        oci setup repair-file-permissions --file /home/runner/.oci/config
+        oci setup repair-file-permissions --file /home/runner/.oci/key.pem
+    
     - run: cat ~/.oci/config  
     - run: oci -v
     - name: List Object storage
