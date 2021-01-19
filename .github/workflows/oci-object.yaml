@@ -36,9 +36,7 @@ jobs:
         oci setup repair-file-permissions --file /home/runner/.oci/key.pem
         oci -v
         exec -l $SHELL
-        
-    
+    - run: echo "$PATH"    
     - run: cat ~/.oci/config  
-    - run: oci -v
     - name: List Object storage
       run: oci os object list --bucket-name kyudong
