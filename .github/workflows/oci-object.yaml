@@ -32,6 +32,7 @@ jobs:
         chmod +x install.sh
         ./install.sh --accept-all-defaults
         export PATH="$PATH:/home/runner/bin"
+        source ~/.bashrc
         oci setup repair-file-permissions --file /home/runner/.oci/config
         oci setup repair-file-permissions --file /home/runner/.oci/key.pem
         oci -v
