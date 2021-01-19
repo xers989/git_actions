@@ -40,4 +40,4 @@ jobs:
     - run: echo "$PATH"    
     - run: cat ~/.oci/config  
     - name: List Object storage
-      run: oci os object list --bucket-name kyudong
+      run: /home/runner/bin/oci os object list --bucket-name kyudong
