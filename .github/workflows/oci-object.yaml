@@ -14,14 +14,6 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.6
-    
-    - name: 'Install OCI CLI'
-      run: |
-        curl -L -O https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh
-        chmod +x install.sh
-        ./install.sh --accept-all-defaults
-        export PATH="$PATH:/home/runner/bin"
-        exec -l $SHELL
         
     - name: 'Write Config & Key Files'
       run: |
@@ -33,9 +25,14 @@ jobs:
         echo "tenancy=${{secrets.OCI_TENANCY}}" >> ~/.oci/config
         echo "key_file=~/.oci/key.pem" >> ~/.oci/config
         echo "${{secrets.OCI_API_KEY}}" >> ~/.oci/key.pem
-  
-    - name: 'Fix Config File Permissions'
+     
+    - name: 'Install OCI CLI'
       run: |
+        curl -L -O https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh
+        chmod +x install.sh
+        ./install.sh --accept-all-defaults
+        export PATH="$PATH:/home/runner/bin"
+        exec -l $SHELL
         oci setup repair-file-permissions --file /home/runner/.oci/config
         oci setup repair-file-permissions --file /home/runner/.oci/key.pem
     
