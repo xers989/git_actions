@@ -32,10 +32,11 @@ jobs:
         chmod +x install.sh
         ./install.sh --accept-all-defaults
         export PATH="$PATH:/home/runner/bin"
-        exec -l $SHELL
         oci setup repair-file-permissions --file /home/runner/.oci/config
         oci setup repair-file-permissions --file /home/runner/.oci/key.pem
         oci -v
+        exec -l $SHELL
+        
     
     - run: cat ~/.oci/config  
     - run: oci -v
